@@ -147,6 +147,7 @@ jobs:
   build-windows:
     needs: [get-metadata]
     runs-on: ${{ matrix.runner }}
+    name: build-windows-${{ matrix.name }}
     strategy:
       matrix:
         include:
@@ -196,6 +197,7 @@ jobs:
   build-macOS:
     needs: [get-metadata]
     runs-on: macOS-latest
+    name: build-macOS-${{ matrix.name }}
     strategy:
       matrix:
         include:
