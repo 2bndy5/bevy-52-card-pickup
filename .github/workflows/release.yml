@@ -93,6 +93,7 @@ jobs:
   build-linux:
     needs: [get-metadata]
     runs-on: ubuntu-latest
+    name: build-linux-${{ matrix.name }}
     strategy:
       matrix:
         include:
