@@ -1,0 +1,11 @@
+[package]
+name = "bevy-52-card-pickup"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bevy = { version = "0.18.0" }
+rand = "0.10.0"
+
+[target.wasm32-unknown-unknown.dependencies]
+getrandom = { version = "0.4.1", features = ["wasm_js"] }
