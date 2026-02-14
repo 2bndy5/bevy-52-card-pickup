@@ -82,7 +82,7 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           path: ${{ env.BINARY }}-wasm-${{ needs.get-metadata.outputs.version }}.zip
-          name: wasm
+          name: build-wasm
 
       - name: Prepare GH-pages artifact
         uses: actions/upload-pages-artifact@v4
@@ -93,6 +93,11 @@ jobs:
   build-linux:
     needs: [get-metadata]
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            name: x86_64
 
     steps:
       - uses: actions/checkout@v6
@@ -104,7 +109,7 @@ jobs:
           rustup target add x86_64-unknown-linux-gnu
 
       - name: Install dependencies
-        # /* spellchecker: disable */
+        # spell-checker: disable
         run: |-
           sudo apt-get update;
           sudo apt-get install \
@@ -116,7 +121,7 @@ jobs:
           libxcb-shape0-dev \
           libxcb-xfixes0-dev \
           libwayland-dev
-        # /* spellchecker: enable */
+        # spell-checker: enable
 
       - name: Build
         run: |
@@ -132,7 +137,7 @@ jobs:
       - name: Package as a zip
         working-directory: ./linux
         env:
-          ASSET_NAME: ${{ env.BINARY }}-linux-${{ needs.get-metadata.outputs.version }}.zip
+          ASSET_NAME: ${{ env.BINARY }}-${{ needs.get-metadata.outputs.version }}-${{ matrix.target }}.zip
         run: |
           zip --recurse-paths ../${BINARY}.zip .
           mv ../${BINARY}.zip ../${ASSET_NAME}
@@ -140,8 +145,8 @@ jobs:
       - name: Upload binaries to artifacts
         uses: actions/upload-artifact@v6
         with:
-          path: ${{ env.BINARY }}-linux-${{ needs.get-metadata.outputs.version }}.zip
-          name: linux
+          path: ${{ env.BINARY }}-${{ needs.get-metadata.outputs.version }}-${{ matrix.target }}.zip
+          name: build-linux-${{ matrix.name }}
 
   # Build for Windows
   build-windows:
@@ -182,7 +187,7 @@ jobs:
       - name: Package as a zip
         shell: pwsh
         env:
-          ASSET_NAME: ${{ env.BINARY }}-windows-${{ needs.get-metadata.outputs.version }}.zip
+          ASSET_NAME: ${{ env.BINARY }}-${{ needs.get-metadata.outputs.version }}-${{ matrix.target }}.zip
         run: |
           Compress-Archive -Path windows/* -DestinationPath "$env:BINARY.zip"
           mv "$env:BINARY.zip" "$env:ASSET_NAME"
@@ -190,8 +195,8 @@ jobs:
       - name: Upload binaries to artifacts
         uses: actions/upload-artifact@v6
         with:
-          path: ${{ env.BINARY }}-windows-${{ needs.get-metadata.outputs.version }}.zip
-          name: windows-${{ matrix.name }}
+          path: ${{ env.BINARY }}-${{ needs.get-metadata.outputs.version }}-${{ matrix.target }}.zip
+          name: build-windows-${{ matrix.name }}
 
   # Build for MacOS
   build-macOS:
@@ -232,7 +237,7 @@ jobs:
       - name: Prepare Package
         shell: bash
         env:
-          ASSET_NAME: ${{ env.BINARY }}-macOS-${{ matrix.name }}-${{ needs.get-metadata.outputs.version }}.dmg
+          ASSET_NAME: ${{ env.BINARY }}-${{ needs.get-metadata.outputs.version }}-${{ matrix.target }}.dmg
         run: |
           mkdir -p ${BINARY}.app/Contents/MacOS
           cp target/${{ matrix.target }}/release/${BINARY} ${BINARY}.app/Contents/MacOS/
@@ -243,8 +248,8 @@ jobs:
       - name: Upload binaries to artifacts
         uses: actions/upload-artifact@v6
         with:
-          path: ${{ env.BINARY }}-macOS-${{ matrix.name }}-${{ needs.get-metadata.outputs.version }}.dmg
-          name: macOS-${{ matrix.name }}
+          path: ${{ env.BINARY }}-${{ needs.get-metadata.outputs.version }}-${{ matrix.target }}.dmg
+          name: build-macOS-${{ matrix.name }}
           retention-days: 1
 
   release-assets:
@@ -261,7 +266,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v7
         with:
-          pattern: ${{ env.BINARY }}-*
+          pattern: build-*
           merge-multiple: true
           path: artifacts
       - name: List assets
