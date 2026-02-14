@@ -1,7 +1,14 @@
 version: "0.2"
 words:
   - Animatable
+  - bindgen
+  - bndy
+  - CFLAGS
   - Despawn
   - lerp
+  - msvc
+  - rustup
   - slerp
   - srgb
+  - tomllib
+  - volname
