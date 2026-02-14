@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - name: Get project version
@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - name: Get project version
@@ -133,7 +133,7 @@ jobs:
           mv ../${BINARY}.zip ../${ASSET_NAME}
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           path: ${{ env.BINARY }}-linux-${{ steps.get_version.outputs.tag }}.zip
           name: linux
@@ -143,7 +143,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - uses: actions/setup-python@v6
@@ -186,7 +186,7 @@ jobs:
           mv "$env:BINARY.zip" "$env:ASSET_NAME"
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           path: ${{ env.BINARY }}-windows-${{ steps.get_version.outputs.tag }}.zip
 
@@ -198,7 +198,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.x'
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - name: Get project version
@@ -237,7 +237,7 @@ jobs:
           mv ${BINARY}-macOS-intel.dmg ${ASSET_NAME}
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           path: ${{ env.BINARY }}-macOS-intel-${{ steps.get_version.outputs.tag }}.dmg
           name: macOS-intel
@@ -250,7 +250,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.x'
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - name: Get project version
@@ -289,7 +289,7 @@ jobs:
           mv ${BINARY}-macOS-apple-silicon.dmg ${ASSET_NAME}
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           path: ${{ env.binary }}-macOS-apple-silicon-${{ steps.get_version.outputs.tag }}.dmg
           name: macOS-apple-silicon
@@ -308,7 +308,7 @@ jobs:
       - build-macOS-apple-silicon
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           pattern: ${{ env.binary }}-*
           merge-multiple: true
