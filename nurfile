@@ -1,0 +1,51 @@
+
+# A helper function to display the command being executed.
+#
+# This also prints the elapsed time the command took to execute.
+export def --wrapped run-cmd [...cmd: string] {
+    let app = if (
+        ($cmd | first) == "cargo"
+    ) {
+        ($cmd | first 2) | str join ' '
+    } else {
+        ($cmd | first)
+    }
+    print $"(ansi blue)\nRunning(ansi reset) ($cmd | str join ' ')"
+    let elapsed = timeit {|| ^($cmd | first) ...($cmd | skip 1)} # spell-checker: disable-line
+    print $"(ansi magenta)($app) took ($elapsed)(ansi reset)"
+}
+
+
+# Build rust API docs
+def "nur docs" [
+    --open (-o), # open the built docs in the default browser
+] {
+    mut cmd = [
+        "cargo",
+        "doc",
+        "--no-deps",
+    ]
+    if $open {
+        $cmd = $cmd | append "--open"
+    }
+    run-cmd ...$cmd
+}
+
+
+# Run clippy and rustfmt
+export def "nur lint" [
+    --check (-c), # Only check, do not fix
+] {
+    mut clippy = [cargo clippy]
+    if $check {
+        $clippy = $clippy | append [-- -D warnings]
+    } else {
+        $clippy = $clippy | append [--fix --allow-dirty --allow-staged]
+    }
+    run-cmd ...$clippy
+    mut fmt = [cargo fmt]
+    if $check {
+        $fmt = $fmt | append "--check"
+    }
+    run-cmd ...$fmt
+}

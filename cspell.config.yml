@@ -4,9 +4,11 @@ words:
   - bindgen
   - bndy
   - CFLAGS
+  - clippy
   - Despawn
   - lerp
   - msvc
+  - nurfile
   - rustup
   - slerp
   - srgb

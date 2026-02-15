@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
-    branches: [main, master]
+    branches: [main]
 
 permissions: {}
 
@@ -29,11 +29,13 @@ jobs:
             ~/.cargo/git/db/
           key: ${{ runner.os }}-lint-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
 
+      # spell-checker: disable
       - name: Install Dependencies
         run: |-
           sudo apt-get update;
           sudo apt-get install --no-install-recommends \
           libasound2-dev libudev-dev libwayland-dev
+      # spell-checker: enable
 
       - name: Lint
         run: cargo clippy --all-targets --all-features -- -D warnings

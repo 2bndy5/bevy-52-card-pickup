@@ -271,24 +271,21 @@ jobs:
           merge-multiple: true
           path: artifacts
       - name: List assets
-        id: list-assets
         run: |-
-          assets=$(ls ./artifacts)
-          echo "Assets to upload: ${assets}"
-          echo "artifacts=${assets}" >> "${GITHUB_OUTPUT}"
+          assets=$(ls artifacts/*)
+          echo "Assets to upload:\n${assets}"
       - name: Upload binaries to release
         if: startsWith(github.ref, 'refs/tags/')
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ github.ref_name }}
-          ARTIFACTS: ${{ steps.list-assets.outputs.artifacts }}
           REPO: ${{ github.repository }}
         run: >-
-          gn release upload
+          gh release upload
           "${TAG}"
           --repo "${REPO}"
-          ${ARTIFACTS}
+          $(ls artifacts/*)
 
   deploy-gh-pages:
     # We only want to deploy from
