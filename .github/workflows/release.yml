@@ -79,7 +79,7 @@ jobs:
           mv ../${BINARY}.zip ../${ASSET_NAME}
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: ${{ env.BINARY }}-wasm-${{ needs.get-metadata.outputs.version }}.zip
           name: build-wasm
@@ -144,7 +144,7 @@ jobs:
           mv ../${BINARY}.zip ../${ASSET_NAME}
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: ${{ env.BINARY }}-${{ needs.get-metadata.outputs.version }}-${{ matrix.target }}.zip
           name: build-linux-${{ matrix.name }}
@@ -194,7 +194,7 @@ jobs:
           mv "$env:BINARY.zip" "$env:ASSET_NAME"
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: ${{ env.BINARY }}-${{ needs.get-metadata.outputs.version }}-${{ matrix.target }}.zip
           name: build-windows-${{ matrix.name }}
@@ -247,7 +247,7 @@ jobs:
           mv ${BINARY}-macOS-${{ matrix.name }}.dmg ${ASSET_NAME}
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: ${{ env.BINARY }}-${{ needs.get-metadata.outputs.version }}-${{ matrix.target }}.dmg
           name: build-macOS-${{ matrix.name }}
@@ -265,7 +265,7 @@ jobs:
       - build-macOS
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           pattern: build-*
           merge-multiple: true
@@ -305,5 +305,5 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v5
         id: deploy-gh-pages
