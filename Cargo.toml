@@ -6,7 +6,7 @@ license = "MIT"
 
 [dependencies]
 bevy = { version = "0.18.0" }
-rand = "0.10.0"
+rand = "0.10.1"
 
 [target.wasm32-unknown-unknown.dependencies]
 # spell-checker: disable-next-line 
