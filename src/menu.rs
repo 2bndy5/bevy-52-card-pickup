@@ -5,8 +5,8 @@ use bevy::{ecs::relationship::RelatedSpawnerCommands, prelude::*};
 pub fn win_menu(mut commands: Commands, asset_server: Res<AssetServer>) {
     let font = asset_server.load("fonts/UbuntuNerdFont-Medium.ttf");
     let font_component = TextFont {
-        font: font.clone(),
-        font_size: 24.0,
+        font: FontSource::Handle(font.clone()),
+        font_size: FontSize::Px(24.0),
         ..Default::default()
     };
 
@@ -44,8 +44,8 @@ pub fn win_menu(mut commands: Commands, asset_server: Res<AssetServer>) {
                     TextColor(Color::WHITE),
                     TextFont {
                         // nerd font required for code-point to render correctly
-                        font: font.clone(),
-                        font_size: 40.0,
+                        font: FontSource::Handle(font.clone()),
+                        font_size: FontSize::Px(40.0),
                         ..Default::default()
                     },
                 ));
@@ -53,8 +53,8 @@ pub fn win_menu(mut commands: Commands, asset_server: Res<AssetServer>) {
                     Text::new("You picked up all 52 cards!"),
                     TextColor(Color::WHITE),
                     TextFont {
-                        font: font.clone(),
-                        font_size: 32.0,
+                        font: FontSource::Handle(font.clone()),
+                        font_size: FontSize::Px(32.0),
                         ..Default::default()
                     },
                 ));
@@ -87,8 +87,8 @@ pub fn button_detector(
 pub fn hello_menu(mut commands: Commands, asset_server: Res<AssetServer>) {
     let font = asset_server.load("fonts/UbuntuNerdFont-Medium.ttf");
     let font_component = TextFont {
-        font: font.clone(),
-        font_size: 24.0,
+        font: FontSource::Handle(font.clone()),
+        font_size: FontSize::Px(24.0),
         ..Default::default()
     };
 
@@ -124,8 +124,8 @@ pub fn hello_menu(mut commands: Commands, asset_server: Res<AssetServer>) {
                     TextColor(Color::WHITE),
                     TextFont {
                         // nerd font required for code-point to render correctly
-                        font: font.clone(),
-                        font_size: 32.0,
+                        font: FontSource::Handle(font.clone()),
+                        font_size: FontSize::Px(32.0),
                         ..Default::default()
                     },
                 )],

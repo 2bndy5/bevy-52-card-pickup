@@ -53,7 +53,6 @@ fn setup_world(
         DirectionalLight {
             color: Color::from(WHITE),
             illuminance: 500.0,
-            shadows_enabled: true,
             ..default()
         },
         Transform::from_xyz(0.0, CAMERA_DISTANCE, 0.0).looking_at(Vec3::ZERO, Vec3::Z),
