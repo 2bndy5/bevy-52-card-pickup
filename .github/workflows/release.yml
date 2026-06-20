@@ -24,7 +24,7 @@ jobs:
     outputs:
       version: ${{ steps.get_version.outputs.tag }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
         with:
           persist-credentials: false
       - uses: actions/setup-python@v6
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
         with:
           persist-credentials: false
       - name: Setup Rust toolchain
@@ -79,13 +79,13 @@ jobs:
           mv ../${BINARY}.zip ../${ASSET_NAME}
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: ${{ env.BINARY }}-wasm-${{ needs.get-metadata.outputs.version }}.zip
           name: build-wasm
 
       - name: Prepare GH-pages artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./wasm/
 
@@ -101,7 +101,7 @@ jobs:
             name: x86_64
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
         with:
           persist-credentials: false
       - name: Setup Rust toolchain
@@ -144,7 +144,7 @@ jobs:
           mv ../${BINARY}.zip ../${ASSET_NAME}
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: ${{ env.BINARY }}-${{ needs.get-metadata.outputs.version }}-${{ matrix.target }}.zip
           name: build-linux-${{ matrix.name }}
@@ -165,7 +165,7 @@ jobs:
             runner: windows-11-arm
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
         with:
           persist-credentials: false
       - name: Setup Rust toolchain
@@ -194,7 +194,7 @@ jobs:
           mv "$env:BINARY.zip" "$env:ASSET_NAME"
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: ${{ env.BINARY }}-${{ needs.get-metadata.outputs.version }}-${{ matrix.target }}.zip
           name: build-windows-${{ matrix.name }}
@@ -213,7 +213,7 @@ jobs:
             name: silicon
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.3
         with:
           persist-credentials: false
       - name: Setup Rust toolchain
@@ -247,7 +247,7 @@ jobs:
           mv ${BINARY}-macOS-${{ matrix.name }}.dmg ${ASSET_NAME}
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: ${{ env.BINARY }}-${{ needs.get-metadata.outputs.version }}-${{ matrix.target }}.dmg
           name: build-macOS-${{ matrix.name }}
@@ -265,7 +265,7 @@ jobs:
       - build-macOS
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           pattern: build-*
           merge-multiple: true
@@ -305,5 +305,5 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v5
         id: deploy-gh-pages
