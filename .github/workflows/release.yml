@@ -57,7 +57,7 @@ jobs:
           rustup target add wasm32-unknown-unknown
       - name: install wasm-bindgen-cli
         run: |
-          cargo install wasm-bindgen-cli
+          cargo install wasm-bindgen-cli@0.2.108 --locked
 
       - name: Build
         run: |
