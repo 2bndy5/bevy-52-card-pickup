@@ -117,12 +117,10 @@ fn deal(
             .with_children(|parent| {
                 parent.spawn(children);
             })
-            .observe(update_material_on::<Pointer<Over>>(hover_material.clone()))
-            .observe(update_material_on::<Pointer<Out>>(card_back_material))
+            .observe(update_material_on::<PointerOver>(hover_material.clone()))
+            .observe(update_material_on::<PointerOut>(card_back_material))
             .observe(pressed_card)
-            .observe(update_material_on::<Pointer<Release>>(
-                hover_material.clone(),
-            ))
+            .observe(update_material_on::<PointerRelease>(hover_material.clone()))
             .id();
         commands.entity(card_entity).insert(AnimatedBy(card_entity));
         count += CARD_THICKNESS;

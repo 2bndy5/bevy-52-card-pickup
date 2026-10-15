@@ -169,7 +169,7 @@ pub fn collect_card(
 
 /// System that runs when a card is pressed.
 pub fn pressed_card(
-    entity_event: On<Pointer<Press>>,
+    entity_event: On<PointerPress>,
     mut query: Query<(&mut Card, &AnimatorNodeId, &mut AnimationPlayer)>,
 ) {
     let entity = entity_event.event_target();
