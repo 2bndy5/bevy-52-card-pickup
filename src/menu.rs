@@ -1,5 +1,7 @@
 use crate::state::GameState;
-use bevy::{ecs::relationship::RelatedSpawnerCommands, prelude::*};
+use bevy::{
+    ecs::relationship::RelatedSpawnerCommands, prelude::*, ui::Pressed, ui_widgets::Button,
+};
 
 /// System that spawns the menu when entering the [`GameState::Win`] state.
 pub fn win_menu(mut commands: Commands, asset_server: Res<AssetServer>) {
@@ -72,14 +74,12 @@ pub fn win_menu(mut commands: Commands, asset_server: Res<AssetServer>) {
 ///
 /// When the button is pressed, this system sets the game state to [`GameState::Deal`], which starts the game.
 pub fn button_detector(
-    query: Query<&Interaction, (Changed<Interaction>, With<Button>)>,
+    query: Query<&Pressed, (Changed<Pressed>, With<Button>)>,
     mut game_state: ResMut<NextState<GameState>>,
 ) {
-    for interaction in query {
-        if *interaction == Interaction::Pressed {
-            info!("Restarting game");
-            game_state.set(GameState::Deal);
-        }
+    for _ in query {
+        info!("Restarting game");
+        game_state.set(GameState::Deal);
     }
 }
 
